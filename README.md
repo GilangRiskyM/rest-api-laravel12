@@ -19,7 +19,7 @@ Kerangka kerja Laravel adalah perangkat lunak sumber terbuka yang dilisensikan d
     ```sh
     php artisan migrate
     ```
-5. Jalankan server pengembangan:
+5. Jalankan server Laravel:
     ```sh
     php artisan serve
     ```
