@@ -42,7 +42,7 @@ class SiswaController extends Controller
         if ($validasi->fails()) {
             return response()->json([
                 'message' => 'Data Tidak Lengkap',
-                'error' => $validasi->messages()
+                'errors' => $validasi->messages()
             ], 422);
         }
 
@@ -76,7 +76,7 @@ class SiswaController extends Controller
         if ($validasi->fails()) {
             return response()->json([
                 'message' => 'Data Tidak Lengkap',
-                'error' => $validasi->messages()
+                'errors' => $validasi->messages()
             ], 422);
         }
 
