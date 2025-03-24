@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\SiswaResource;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use App\Http\Resources\SiswaResource;
 use Illuminate\Support\Facades\Validator;
 
 class SiswaController extends Controller
@@ -29,14 +30,15 @@ class SiswaController extends Controller
     {
         $validasi = Validator::make($request->all(), [
             'nama' => 'required',
-            'nis' => 'required',
+            'nis' => ['required', Rule::unique('siswa', 'nis')],
             'kelas' => 'required',
             'jurusan' => 'required',
         ], [
-            'nama.required' => 'Nama Siswa Wajib Diisi',
-            'nis.required' => 'NIS Wajib Diisi',
-            'kelas.required' => 'Kelas Wajib Diisi',
-            'jurusan.required' => 'Jurusan Wajib Diisi',
+            'nama.required' => 'Nama Siswa Wajib Diisi!',
+            'nis.required' => 'NIS Wajib Diisi!',
+            'nis.unique' => 'NIS sudah terdaftar, gunakan yang lain!',
+            'kelas.required' => 'Kelas Wajib Diisi!',
+            'jurusan.required' => 'Jurusan Wajib Diisi!',
         ]);
 
         if ($validasi->fails()) {
@@ -63,12 +65,16 @@ class SiswaController extends Controller
     {
         $validasi = Validator::make($request->all(), [
             'nama' => 'required',
-            'nis' => 'required',
+            'nis' => [
+                'required',
+                Rule::unique('siswa', 'nis')->ignore($siswa->id),
+            ],
             'kelas' => 'required',
             'jurusan' => 'required',
         ], [
             'nama.required' => 'Nama Siswa Wajib Diisi',
             'nis.required' => 'NIS Wajib Diisi',
+            'nis.unique' => 'NIS sudah digunakan oleh siswa lain',
             'kelas.required' => 'Kelas Wajib Diisi',
             'jurusan.required' => 'Jurusan Wajib Diisi',
         ]);
